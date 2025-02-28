@@ -1,0 +1,325 @@
+{
+  "info": {
+    "_postman_id": "a1b2c3d4-e5f6-7890-1234-567890abcdef",
+    "name": "Donation Management API",
+    "description": "API endpoints for the donation management system",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:5000",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Authentication",
+      "description": "User authentication endpoints",
+      "item": [
+        {
+          "name": "Register User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"John Doe\",\n    \"email\": \"john@example.com\",\n    \"password\": \"password123\",\n    \"role\": \"user\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/auth/register",
+              "host": ["{{base_url}}"],
+              "path": ["api", "auth", "register"]
+            },
+            "description": "Register a new user"
+          },
+          "response": []
+        },
+        {
+          "name": "Register Admin",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Admin User\",\n    \"email\": \"admin@example.com\",\n    \"password\": \"admin123\",\n    \"role\": \"admin\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/auth/register",
+              "host": ["{{base_url}}"],
+              "path": ["api", "auth", "register"]
+            },
+            "description": "Register an admin user"
+          },
+          "response": []
+        },
+        {
+          "name": "Login User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();",
+                  "pm.environment.set('user_token', response.token);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"john@example.com\",\n    \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/auth/login",
+              "host": ["{{base_url}}"],
+              "path": ["api", "auth", "login"]
+            },
+            "description": "Login as regular user"
+          },
+          "response": []
+        },
+        {
+          "name": "Login Admin",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();",
+                  "pm.environment.set('admin_token', response.token);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"admin@example.com\",\n    \"password\": \"admin123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/auth/login",
+              "host": ["{{base_url}}"],
+              "path": ["api", "auth", "login"]
+            },
+            "description": "Login as admin user"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Donations",
+      "description": "Donation management endpoints",
+      "item": [
+        {
+          "name": "Create Donation",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-auth-token",
+                "value": "{{user_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"amount\": 100,\n    \"donationType\": \"money\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/donations",
+              "host": ["{{base_url}}"],
+              "path": ["api", "donations"]
+            },
+            "description": "Create a new donation as a regular user"
+          },
+          "response": []
+        },
+        {
+          "name": "Get User's Donations",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-auth-token",
+                "value": "{{user_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/donations",
+              "host": ["{{base_url}}"],
+              "path": ["api", "donations"]
+            },
+            "description": "Get logged in user's donations"
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Donations (Admin)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-auth-token",
+                "value": "{{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/donations",
+              "host": ["{{base_url}}"],
+              "path": ["api", "donations"]
+            },
+            "description": "Get all donations (admin only)"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Requests",
+      "description": "Donation request endpoints",
+      "item": [
+        {
+          "name": "Create Request",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "x-auth-token",
+                "value": "{{user_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"description\": \"Need financial assistance for medical treatment\",\n    \"neededAmount\": 500\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/requests",
+              "host": ["{{base_url}}"],
+              "path": ["api", "requests"]
+            },
+            "description": "Create a new donation request"
+          },
+          "response": []
+        },
+        {
+          "name": "Get User's Requests",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-auth-token",
+                "value": "{{user_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/requests",
+              "host": ["{{base_url}}"],
+              "path": ["api", "requests"]
+            },
+            "description": "Get logged in user's donation requests"
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Requests (Admin)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-auth-token",
+                "value": "{{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/requests",
+              "host": ["{{base_url}}"],
+              "path": ["api", "requests"]
+            },
+            "description": "Get all donation requests (admin only)"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Analytics",
+      "description": "Data analytics endpoints",
+      "item": [
+        {
+          "name": "Get Analytics (Admin Only)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-auth-token",
+                "value": "{{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/analytics",
+              "host": ["{{base_url}}"],
+              "path": ["api", "analytics"]
+            },
+            "description": "Get donation and request analytics (admin only)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Analytics (User - Should Fail)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-auth-token",
+                "value": "{{user_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/analytics",
+              "host": ["{{base_url}}"],
+              "path": ["api", "analytics"]
+            },
+            "description": "Attempt to get analytics as a regular user (should fail with 403 Forbidden)"
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
