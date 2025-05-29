@@ -1,0 +1,672 @@
+{
+	"info": {
+		"_postman_id": "b6b5b5b5-b5b5-b5b5-b5b5-b5b5b5b5b5b5",
+		"name": "NGO Connect API",
+		"description": "A comprehensive API collection for testing the NGO Connect platform",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Register User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Test User\",\n  \"email\": \"testuser@example.com\",\n  \"password\": \"password123\",\n  \"role\": \"donor\",\n  \"phone\": \"1234567890\",\n  \"address\": {\n    \"street\": \"123 Main St\",\n    \"city\": \"New York\",\n    \"state\": \"NY\",\n    \"zipCode\": \"10001\",\n    \"country\": \"USA\"\n  }\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/register",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						},
+						"description": "Register a new user"
+					},
+					"response": []
+				},
+				{
+					"name": "Login User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"testuser@example.com\",\n  \"password\": \"password123\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						},
+						"description": "Login with user credentials"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Current User",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/me",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"me"
+							]
+						},
+						"description": "Get the currently logged in user"
+					},
+					"response": []
+				},
+				{
+					"name": "Update User Details",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Updated Name\",\n  \"phone\": \"0987654321\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/updatedetails",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"updatedetails"
+							]
+						},
+						"description": "Update the current user's details"
+					},
+					"response": []
+				}
+			],
+			"description": "Authentication routes for user management"
+		},
+		{
+			"name": "NGOs",
+			"item": [
+				{
+					"name": "Create NGO Profile",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"organizationName\": \"Test NGO\",\n  \"registrationNumber\": \"NGO12345\",\n  \"yearFounded\": 2010,\n  \"mission\": \"Help those in need\",\n  \"vision\": \"Create a better world for everyone\",\n  \"website\": \"https://testngo.org\",\n  \"primaryLocation\": {\n    \"street\": \"456 NGO St\",\n    \"city\": \"Chicago\",\n    \"state\": \"IL\",\n    \"zipcode\": \"60601\",\n    \"country\": \"USA\"\n  },\n  \"contactEmail\": \"contact@testngo.org\",\n  \"contactPhone\": \"1234567890\",\n  \"focusAreas\": [\"education\", \"health\", \"poverty\"]\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/ngos",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"ngos"
+							]
+						},
+						"description": "Create a new NGO profile"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All NGOs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/ngos",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"ngos"
+							]
+						},
+						"description": "Get a list of all NGOs"
+					},
+					"response": []
+				},
+				{
+					"name": "Get NGO by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/ngos/{{ngoId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"ngos",
+								"{{ngoId}}"
+							]
+						},
+						"description": "Get details of a specific NGO"
+					},
+					"response": []
+				},
+				{
+					"name": "Update NGO Profile",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"mission\": \"Updated mission statement\",\n  \"contactPhone\": \"9876543210\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/ngos/{{ngoId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"ngos",
+								"{{ngoId}}"
+							]
+						},
+						"description": "Update an NGO's profile"
+					},
+					"response": []
+				},
+				{
+					"name": "Add NGO Requirement",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"category\": \"goods\",\n  \"title\": \"School Supplies\",\n  \"description\": \"Notebooks, pens, and other supplies for underprivileged children\",\n  \"quantity\": 100,\n  \"urgency\": \"medium\",\n  \"deadline\": \"2023-12-31\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/ngos/{{ngoId}}/requirements",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"ngos",
+								"{{ngoId}}",
+								"requirements"
+							]
+						},
+						"description": "Add a new requirement for an NGO"
+					},
+					"response": []
+				}
+			],
+			"description": "Routes for managing NGO profiles"
+		},
+		{
+			"name": "Donations",
+			"item": [
+				{
+					"name": "Create Monetary Donation",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"ngo\": \"{{ngoId}}\",\n  \"amount\": 100,\n  \"currency\": \"USD\",\n  \"paymentMethod\": \"credit_card\",\n  \"notes\": \"Monthly donation\",\n  \"isAnonymous\": false\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/donations/monetary",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"donations",
+								"monetary"
+							]
+						},
+						"description": "Create a new monetary donation"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Goods Donation",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"ngo\": \"{{ngoId}}\",\n  \"goods\": {\n    \"title\": \"Clothes Donation\",\n    \"description\": \"Winter clothes for homeless shelter\",\n    \"category\": \"clothing\",\n    \"condition\": \"good\",\n    \"quantity\": 20,\n    \"estimatedValue\": 500\n  },\n  \"logistics\": {\n    \"pickupRequired\": true,\n    \"pickupAddress\": {\n      \"street\": \"123 Donor St\",\n      \"city\": \"New York\",\n      \"state\": \"NY\",\n      \"zipCode\": \"10001\",\n      \"country\": \"USA\"\n    },\n    \"pickupInstructions\": \"Please call before pickup\"\n  },\n  \"notes\": \"Please distribute to homeless shelter\",\n  \"isAnonymous\": false\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/donations/goods",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"donations",
+								"goods"
+							]
+						},
+						"description": "Create a new goods donation"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Organ Donation",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"ngo\": \"{{ngoId}}\",\n  \"organ\": {\n    \"organType\": \"blood\",\n    \"medicalInformation\": \"Blood type: O+\",\n    \"consentGiven\": true,\n    \"legalDisclaimerAccepted\": true\n  },\n  \"notes\": \"Regular blood donor\",\n  \"isAnonymous\": false\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/donations/organ",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"donations",
+								"organ"
+							]
+						},
+						"description": "Register a new organ donation"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Donations",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/donations",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"donations"
+							]
+						},
+						"description": "Get all donations for the authenticated user"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Donation by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/donations/{{donationId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"donations",
+								"{{donationId}}"
+							]
+						},
+						"description": "Get details of a specific donation"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Donation Status",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"status\": \"completed\",\n  \"adminNotes\": \"Donation received and processed\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/donations/{{donationId}}/status",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"donations",
+								"{{donationId}}",
+								"status"
+							]
+						},
+						"description": "Update the status of a donation"
+					},
+					"response": []
+				}
+			],
+			"description": "Routes for managing donations"
+		},
+		{
+			"name": "Resources",
+			"item": [
+				{
+					"name": "Create Resource",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"School Space Available\",\n  \"description\": \"We have a school hall available for events on weekends\",\n  \"resourceType\": \"offer\",\n  \"category\": \"venue\",\n  \"location\": {\n    \"street\": \"456 NGO St\",\n    \"city\": \"Chicago\",\n    \"state\": \"IL\",\n    \"zipcode\": \"60601\",\n    \"country\": \"USA\"\n  },\n  \"availability\": {\n    \"startDate\": \"2023-01-01\",\n    \"endDate\": \"2023-12-31\",\n    \"recurring\": true,\n    \"schedule\": \"Every Saturday and Sunday\"\n  },\n  \"preferredMethod\": \"on_site\",\n  \"tags\": [\"venue\", \"education\", \"events\"]\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/resources",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"resources"
+							]
+						},
+						"description": "Create a new resource for exchange"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Resources",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/resources",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"resources"
+							]
+						},
+						"description": "Get all resources available for exchange"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Resource by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/resources/{{resourceId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"resources",
+								"{{resourceId}}"
+							]
+						},
+						"description": "Get details of a specific resource"
+					},
+					"response": []
+				},
+				{
+					"name": "Request Resource Exchange",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"message\": \"We would like to use your school hall for a fundraising event on January 15th\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/resources/{{resourceId}}/exchange",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"resources",
+								"{{resourceId}}",
+								"exchange"
+							]
+						},
+						"description": "Request an exchange for a resource"
+					},
+					"response": []
+				},
+				{
+					"name": "Respond to Exchange Request",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"status\": \"accepted\",\n  \"responseMessage\": \"We're happy to accommodate your event. Please contact us to finalize the details.\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/resources/{{resourceId}}/exchange/{{exchangeId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"resources",
+								"{{resourceId}}",
+								"exchange",
+								"{{exchangeId}}"
+							]
+						},
+						"description": "Respond to a resource exchange request"
+					},
+					"response": []
+				}
+			],
+			"description": "Routes for managing resource exchanges"
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:5000",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "ngoId",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "donationId",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "resourceId",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "exchangeId",
+			"value": "",
+			"type": "string"
+		}
+	]
+} 
